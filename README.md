@@ -6,9 +6,6 @@ query a [Presto cluster](https://github.com/joyent/terraform-triton-presto) and 
 ## Usage
 
 ```hcl
-#
-# Data Sources
-#
 data "triton_image" "ubuntu" {
   name        = "ubuntu-16.04"
   type        = "lx-dataset"
@@ -23,9 +20,6 @@ data "triton_network" "private" {
   name = "My-Fabric-Network"
 }
 
-#
-# Modules
-#
 module "bastion" {
   source = "github.com/joyent/terraform-triton-bastion"
 
@@ -33,7 +27,6 @@ module "bastion" {
   image   = "${data.triton_image.ubuntu.id}"
   package = "g4-general-4G"
 
-  # Public and Private
   networks = [
     "${data.triton_network.public.id}",
     "${data.triton_network.private.id}",
@@ -47,7 +40,6 @@ module "redash" {
   image   = "${data.triton_image.ubuntu.id}"
   package = "g4-general-4G"
 
-  # Public and Private
   networks = [
     "${data.triton_network.public.id}",
     "${data.triton_network.private.id}",
