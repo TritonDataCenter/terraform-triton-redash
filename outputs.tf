@@ -1,12 +1,8 @@
 #
 # Outputs
 #
-output "redash_ip" {
+output "redash_primaryip" {
   value = ["${triton_machine.redash.*.primaryip}"]
-}
-
-output "redash_role_tag" {
-  value = "${var.role_tag}"
 }
 
 output "redash_address" {

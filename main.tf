@@ -20,8 +20,7 @@ data "triton_account" "current" {}
 # Locals
 #
 locals {
-  redash_address             = "${var.cns_service_name_redash}.svc.${data.triton_account.current.id}.${data.triton_datacenter.current.name}.${var.cns_fqdn_base}"
-  presto_coordinator_address = "${var.cns_service_name_presto_coordinator}.svc.${data.triton_account.current.id}.${data.triton_datacenter.current.name}.${var.cns_fqdn_base}"
+  redash_address = "${var.cns_service_name_redash}.svc.${data.triton_account.current.id}.${data.triton_datacenter.current.name}.${var.cns_fqdn_base}"
 }
 
 #
@@ -36,10 +35,6 @@ resource "triton_machine" "redash" {
 
   networks = ["${var.networks}"]
 
-  tags {
-    role = "${var.role_tag}"
-  }
-
   cns {
     services = ["${var.cns_service_name_redash}"]
   }
@@ -53,7 +48,7 @@ resource "triton_machine" "redash" {
 # Firewall Rules
 #
 resource "triton_firewall_rule" "ssh" {
-  rule        = "FROM tag \"role\" = \"${var.bastion_role_tag}\" TO tag \"role\" = \"${var.role_tag}\" ALLOW tcp PORT 22"
+  rule        = "FROM tag \"triton.cns.services\" = \"${var.bastion_cns_service_name}\" TO tag \"triton.cns.services\" = \"${var.cns_service_name_redash}\" ALLOW tcp PORT 22"
   enabled     = true
   description = "${var.name} - Allow access from bastion hosts to Redash servers."
 }
@@ -61,7 +56,7 @@ resource "triton_firewall_rule" "ssh" {
 resource "triton_firewall_rule" "client_access" {
   count = "${length(var.client_access)}"
 
-  rule        = "FROM ${var.client_access[count.index]} TO tag \"role\" = \"${var.role_tag}\" ALLOW tcp PORT 80"
+  rule        = "FROM ${var.client_access[count.index]} TO tag \"triton.cns.services\" = \"${var.cns_service_name_redash}\" ALLOW tcp PORT 80"
   enabled     = true
   description = "${var.name} - Allow access from clients to Redash servers."
 }

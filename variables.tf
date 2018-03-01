@@ -32,12 +32,6 @@ variable "user" {
   default     = "root"
 }
 
-variable "role_tag" {
-  description = "The 'role' tag for the Presto machine(s)."
-  type        = "string"
-  default     = "presto"
-}
-
 variable "provision" {
   description = "Boolean 'switch' to indicate if Terraform should do the machine provisioning to install and configure Presto."
   type        = "string"
@@ -75,7 +69,7 @@ EOF
 variable "cns_fqdn_base" {
   description = "The fully qualified domain name base for the CNS address - e.g. 'cns.joyent.com' for Joyent Public Cloud."
   type        = "string"
-  default     = "cns.joyent.com"
+  default     = "triton.zone"
 }
 
 variable "bastion_host" {
@@ -88,7 +82,7 @@ variable "bastion_user" {
   type        = "string"
 }
 
-variable "bastion_role_tag" {
-  description = "The 'role' tag for the Presto machine(s) to allow access FROM the Bastion machine(s)."
+variable "bastion_cns_service_name" {
+  description = "The CNS service name for the Prometheus machine(s) to allow access FROM the Bastion machine(s)."
   type        = "string"
 }
