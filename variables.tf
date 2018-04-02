@@ -7,17 +7,17 @@ variable "name" {
 }
 
 variable "image" {
-  description = "The image to deploy as the Presto machine(s)."
+  description = "The image to deploy as the Redash machine(s)."
   type        = "string"
 }
 
 variable "package" {
-  description = "The package to deploy as the Presto machine(s)."
+  description = "The package to deploy as the Redash machine(s)."
   type        = "string"
 }
 
 variable "networks" {
-  description = "The networks to deploy the Presto machine(s) within."
+  description = "The networks to deploy the Redash machine(s) within."
   type        = "list"
 }
 
@@ -33,13 +33,13 @@ variable "user" {
 }
 
 variable "provision" {
-  description = "Boolean 'switch' to indicate if Terraform should do the machine provisioning to install and configure Presto."
+  description = "Boolean 'switch' to indicate if Terraform should do the machine provisioning to install and configure Redash."
   type        = "string"
 }
 
 variable "version_redash" {
   default     = "3.0.0.b3134"
-  description = "The version of Presto to install. See https://repo1.maven.org/maven2/com/facebook/presto/presto-server/."
+  description = "The version of Redash to install. See https://github.com/getredash/redash/blob/master/CHANGELOG.md. Note: the build numbers are elusive to find."
   type        = "string"
 }
 
@@ -57,7 +57,7 @@ variable "cns_service_name_presto_coordinator" {
 
 variable "client_access" {
   description = <<EOF
-'From' targets to allow client access to Presto' web port - i.e. access from other VMs or public internet.
+'From' targets to allow client access to Redash' web port - i.e. access from other VMs or public internet.
 See https://docs.joyent.com/public-cloud/network/firewall/cloud-firewall-rules-reference#target
 for target syntax.
 EOF
